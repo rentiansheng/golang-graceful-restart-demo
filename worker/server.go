@@ -21,10 +21,11 @@ func main() {
 
 	done := make(chan bool, 1000)
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprintf(w, "Hello, %q", html.EscapeString(r.URL.Path))
+		fmt.Fprintf(w, "Hello, path:%s", html.EscapeString(r.URL.Path))
 	})
 	http.HandleFunc("/exit", func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprintf(w, "Hello, %q %q", html.EscapeString(r.URL.Path), time.Now().String())
+		fmt.Fprintf(w, "Hello, pid:%d, time:%s", os.Getpid(), time.Now().String())
+		fmt.Println(os.Getpid())
 		done <- true
 
 	})
